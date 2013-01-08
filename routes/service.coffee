@@ -1,5 +1,4 @@
-# CMS
-
+# CMS Service Endpoint
 exports.cms = (req, res) ->
   cmsUpdates =
     lessons: [
@@ -23,3 +22,21 @@ exports.cms = (req, res) ->
     updated: Date()
 
   res.json cmsUpdates
+
+# Feed Service Endpoint
+exports.feed = (req, res) ->
+  feedData =
+    submissions: [
+      {
+        exercise: 1
+        user: 'Noah Freitas'
+        url: 'https://github.com/noah-freitas/learning-node-js/tree/master/1'
+        date: '2013-01-21'
+      }
+    ]
+  req.socket.setTimeout Infinity
+  res.type 'text/event-stream'
+  res.set 'Cache-Control', 'no-cache'
+  res.write '\n'
+  res.write 'id: 1\n'
+  res.write "data: #{JSON.stringify feedData}\n\n"
