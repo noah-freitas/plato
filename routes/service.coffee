@@ -56,10 +56,8 @@ exports.auth = (req, res) ->
       verified = JSON.parse data
       res.contentType 'application/json'
       if verified.status is 'okay'
-        console.info 'browserid auth successful, setting req.session.email'
         req.session.email = verified.email
       else
-        console.error verified.reason
         res.writeHead 403
       res.write data
       res.end()
@@ -68,9 +66,9 @@ exports.auth = (req, res) ->
 
   body = qs.stringify
     assertion: assertion
-    audience: 'http://localhost:5000'
+    audience: 'http://socratesapp.herokuapp.com/'
+    # audience: 'http://localhost:5000/'
 
-  console.info 'verifying with browserid'
   request = https.request
     host: 'verifier.login.persona.org'
     path: '/verify'
@@ -81,4 +79,29 @@ exports.auth = (req, res) ->
   , onVerifyResp
 
   request.write body
+  request.end()
+
+# GitHub OAuth 2 authorization callback.
+exports.githubAuthCallback = (req, res) ->
+  code = req.query.code
+
+  request = https.request
+    host: 'github.com'
+    path: '/login/oauth/access_token'
+    method: 'POST'
+    headers:
+      'Accept': 'application/json'
+  , (apiRes) ->
+    data = ''
+    apiRes.setEncoding 'utf8'
+    apiRes.on 'data', (chunk) -> data += chunk
+    apiRes.on 'end', ->
+      console.log data
+      res.end data
+
+  request.write qs.stringify
+    client_id: '95aadcd8f873bfb1dc5e'
+    client_secret: 'b52a728b2396ffee36584f7fe0c4577efb84f245'
+    code: code
+
   request.end()

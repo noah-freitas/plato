@@ -17,5 +17,6 @@ app.configure ->
 app.get '/service/cms', services.cms
 app.get '/service/feed', services.feed
 app.get '/service/auth', services.auth
+app.get '/service/github-auth-callback', services.githubAuthCallback
 
 app.listen process.env.PORT
