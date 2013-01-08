@@ -2,10 +2,10 @@
   "name": "socrates-plato",
   "version": "0.0.1",
   "description": "Node.js back-end for Socrates",
-  "main": "index.js",
+  "main": "server.coffee",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node node.js"
+    "start": "coffee server.coffee"
   },
   "repository": {
     "type": "git",
@@ -17,8 +17,8 @@
   "author": "Noah Freitas",
   "license": "BSD",
   "dependencies": {
-    "express": "3.x.x",
-    "connect": "*",
-    "coffee-script": "*"
+  	"coffee-script": "*",
+    "express": "3.0.6",
+    "path": "0.4.9"
   }
 }
