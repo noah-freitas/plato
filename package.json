@@ -19,6 +19,11 @@
   "dependencies": {
     "coffee-script": "*",
     "express": "3.0.6",
-    "path": "0.4.9"
+    "path": "0.4.9",
+    "qs": "0.5.3"
+  },
+  "engines": {
+    "node": "0.8.x",
+    "npm": "1.1.x"
   }
 }
